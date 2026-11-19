@@ -1,0 +1,12 @@
+---
+description: Feature module architecture and encapsulation rules
+globs: src/features/**
+alwaysApply: false
+---
+
+# Feature Module Architecture
+- Each feature encapsulates `components/`, `hooks/`, `api/`, `model/`.
+- The ONLY public surface of a feature is its `index.ts`.
+- Code outside a feature must import solely from `@/features/<feature-name>`.
+- Internal files must never be directly imported by other features or components.
+- See `docs/ai/architecture.md`.

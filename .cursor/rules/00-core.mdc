@@ -1,0 +1,11 @@
+---
+description: Folio Core Engineering Standards and Quality Gates
+globs: *
+alwaysApply: true
+---
+
+# Core Standards
+All development must adhere strictly to the rules documented in `AGENTS.md`.
+- Run `pnpm check` to verify linting, TypeScript types, and unit tests before completing any task.
+- Follow the unidirectional dependency architecture: `app` -> `features` -> `components`, `lib`, `api`.
+- Never install unapproved dependencies or icon packages.

@@ -1,0 +1,11 @@
+---
+description: Custom SVG Icon System rules
+globs: src/**/*.tsx
+alwaysApply: false
+---
+
+# Icon Guidelines
+- All icons live strictly in `src/components/icons/icons.tsx`.
+- Never import from `lucide-react`, `react-icons`, `@heroicons/*`, or other icon packages.
+- Always use `<Icon name="..." size={16 | 20 | 24} />`.
+- See `docs/ai/icons.md`.

@@ -1,0 +1,87 @@
+/* Reader typography variables */
+:root {
+  --reader-size: 18px;
+  --reader-leading: 1.65;
+  --reader-measure: 66ch;
+  --reader-font-family: var(--nf-reading-serif, Georgia, serif);
+}
+
+[data-reader-font='literata'] {
+  --reader-font-family: var(--nf-reading-serif, Georgia, serif);
+}
+
+[data-reader-font='hyper'] {
+  --reader-font-family: var(--nf-reading-hyper, system-ui, sans-serif);
+}
+
+[data-reader-font='inter'] {
+  --reader-font-family: var(--nf-ui, system-ui, sans-serif);
+}
+
+/* Language font overrides inside reader */
+[data-reader] :lang(hi),
+[data-reader] :lang(mr),
+[data-reader] :lang(sa),
+[data-reader] :lang(ne),
+[data-reader]:lang(hi),
+[data-reader]:lang(mr),
+[data-reader]:lang(sa),
+[data-reader]:lang(ne) {
+  --reader-font-family: var(--nf-deva-serif, Georgia, serif);
+}
+
+[data-reader-font='hyper'][data-reader] :lang(hi),
+[data-reader-font='hyper'][data-reader] :lang(mr),
+[data-reader-font='hyper'][data-reader] :lang(sa),
+[data-reader-font='hyper'][data-reader] :lang(ne),
+[data-reader-font='inter'][data-reader] :lang(hi),
+[data-reader-font='inter'][data-reader] :lang(mr),
+[data-reader-font='inter'][data-reader] :lang(sa),
+[data-reader-font='inter'][data-reader] :lang(ne) {
+  --reader-font-family: var(--nf-deva-sans, system-ui, sans-serif);
+}
+
+[data-reader] :lang(ar),
+[data-reader] :lang(ur),
+[data-reader] :lang(fa),
+[data-reader]:lang(ar),
+[data-reader]:lang(ur),
+[data-reader]:lang(fa) {
+  --reader-font-family: var(--nf-arabic, system-ui, sans-serif);
+}
+
+.reader-surface {
+  background-color: var(--reader-page);
+  color: var(--reader-text);
+}
+
+.reader-container {
+  font-family: var(--reader-font-family);
+  font-size: var(--reader-size);
+  line-height: var(--reader-leading);
+  max-inline-size: var(--reader-measure);
+  margin-inline: auto;
+  padding-inline: 1.5rem;
+  text-align: start;
+}
+
+.hl-important {
+  background-color: var(--hl-important);
+  color: var(--reader-text);
+  padding-inline: 0.15em;
+  border-radius: 2px;
+}
+
+.hl-definition {
+  background-color: var(--hl-definition);
+  color: var(--reader-text);
+  padding-inline: 0.15em;
+  border-radius: 2px;
+}
+
+.hl-question {
+  background-color: var(--hl-question);
+  color: var(--reader-text);
+  padding-inline: 0.15em;
+  border-radius: 2px;
+}

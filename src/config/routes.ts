@@ -1,0 +1,21 @@
+export const routes = {
+  home: () => '/',
+  devDesign: () => '/dev/design',
+  welcome: () => '/welcome',
+  library: () => '/library',
+  discover: () => '/discover',
+  search: () => '/search',
+  marks: () => '/marks',
+  vocabulary: () => '/vocabulary',
+  settings: () => '/settings',
+  admin: () => '/admin',
+  book: {
+    hub: (id: string) => `/book/${id}`,
+    read: (id: string) => `/book/${id}/read`,
+    characters: (id: string) => `/book/${id}/characters`,
+    concepts: (id: string) => `/book/${id}/concepts`,
+    ask: (id: string) => `/book/${id}/ask`,
+    cards: (id: string) => `/book/${id}/cards`,
+    marks: (id: string) => `/book/${id}/marks`,
+  },
+} as const;

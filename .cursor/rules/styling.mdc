@@ -1,0 +1,12 @@
+---
+description: Styling tokens and theme guidelines
+globs: src/**/*.tsx,src/styles/**/*.css
+alwaysApply: false
+---
+
+# Styling Guidelines
+- Use semantic token classes only (`bg-page`, `bg-card`, `text-text`, `text-muted`, `border-border`, `bg-primary`, etc.).
+- Never use hardcoded hex, rgb, or hsl values.
+- Never write `dark:` overrides; colors adapt automatically through tokens.
+- Layout breakpoints are restricted to `md` (768px) and `xl` (1280px).
+- See `docs/ai/styling-and-tokens.md`.

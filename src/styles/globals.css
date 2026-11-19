@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+@import './tokens.css';
+@import './reader.css';
+
+@custom-variant dark (&:where([data-theme=dark], [data-theme=dark] *));
+
+@theme {
+  --color-*: initial;
+}
+
+@theme inline {
+  --color-transparent: transparent;
+  --color-current: currentColor;
+
+  --color-page: var(--color-page);
+  --color-card: var(--color-card);
+  --color-raised: var(--color-raised);
+  --color-border: var(--color-border);
+  --color-text: var(--color-text);
+  --color-muted: var(--color-muted);
+  --color-primary: var(--color-primary);
+  --color-primary-fg: var(--color-primary-fg);
+  --color-primary-soft: var(--color-primary-soft);
+  --color-primary-ink: var(--color-primary-ink);
+  --color-amber: var(--color-amber);
+  --color-amber-fg: var(--color-amber-fg);
+  --color-amber-strong: var(--color-amber-strong);
+  --color-amber-soft: var(--color-amber-soft);
+  --color-amber-ink: var(--color-amber-ink);
+  --color-violet: var(--color-violet);
+  --color-violet-soft: var(--color-violet-soft);
+  --color-violet-ink: var(--color-violet-ink);
+  --color-rose: var(--color-rose);
+  --color-rose-strong: var(--color-rose-strong);
+  --color-rose-soft: var(--color-rose-soft);
+  --color-rose-ink: var(--color-rose-ink);
+  --color-success: var(--color-success);
+  --color-error: var(--color-error);
+
+  --font-display: var(--nf-display), Georgia, serif;
+  --font-ui: var(--nf-ui), system-ui, sans-serif;
+  --font-mono: var(--nf-mono), ui-monospace, monospace;
+
+  --radius-sm: var(--radius-control);
+  --radius-md: var(--radius-card);
+  --radius-lg: var(--radius-dialog);
+  --radius-full: var(--radius-chip);
+
+  --text-xs: 12px;
+  --text-sm: 14px;
+  --text-base: 16px;
+  --text-lg: 20px;
+  --text-xl: 24px;
+  --text-2xl: 30px;
+  --text-3xl: 38px;
+}
+
+@utility text-hero {
+  font-size: 36px;
+  line-height: 1.15;
+}
+
+@media (min-width: 1280px) {
+  .text-hero {
+    font-size: 48px;
+    line-height: 1.12;
+  }
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums;
+}
+
+body {
+  background-color: var(--color-page);
+  color: var(--color-text);
+  font-family: var(--font-ui);
+  min-height: 100dvh;
+  margin: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-display);
+}
