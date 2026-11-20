@@ -109,38 +109,38 @@ None in Layer A.
 
 ## Layer 1 — Public Pages & Auth
 
-- [ ] 1.1: P1 Landing (`/`)
-- [ ] 1.2: P2 Demo (`/demo`)
-- [ ] 1.3: P3 Help (`/help`)
-- [ ] 1.4: P4 Legal (`/legal`)
-- [ ] 1.5: P5 Auth (`/auth`)
-- [ ] 1.6: A1 Welcome (`/welcome`)
-- [ ] Gate 1: 3 widths × 2 themes; axe clean; keyboard path; Landing first load has no Cytoscape bundle
+- [x] 1.1: P1 Landing (`/`) — purpose line, Story/Study preview, steps, privacy, formats, FAQ, and sample/sign-up actions.
+- [x] 1.2: P2 Demo (`/demo`) — sample Reader, map, limited Ask, dismissible sign-up card, and sample-book switch.
+- [x] 1.3: P3 Help (`/help`) — FAQ, formats, Story/Study, eight glossary terms, scanned-PDF guidance, and contact.
+- [x] 1.4: P4 Legal (`/legal`) — Privacy, Terms, retention, and copyright tabs marked as draft.
+- [x] 1.5: P5 Auth (`/auth`) — Sign in/Sign up tabs, email/password form, Google mock action, forgot/reset states.
+- [x] 1.6: A1 Welcome (`/welcome`) — reading mode, first book, theme, font, skip and finish actions.
+- [x] Gate 1: `pnpm verify` passed (lint, hex check, typecheck, 32 unit tests, 17-route build); `pnpm e2e` passed 42/42 at 390×844, 820×1180, and 1440×900 in both themes with axe serious/critical checks. Public routes: `/`, `/demo`, `/help`, `/legal`, `/auth`, `/welcome`. Landing Cytoscape preview remains dynamically imported with `ssr: false`.
 
 ---
 
 ## Layer 2 — Library & Upload
 
-- [ ] 2.1: A2 Library (`/library`)
-- [ ] 2.2: O1 Upload & analysis overlay
-- [ ] 2.3: O2 Processing drawer
-- [ ] 2.4: A3 Book hub (`/book/[id]`)
-- [ ] 2.5: System states (Not found, Error, Offline, Unsupported file, Session expired, Limit reached)
-- [ ] Gate 2: Upload simulated end to end; Retry works; all 6 states reachable; verify & e2e green
+- [x] 2.1: A2 Library (`/library`) — sample mock books, mode filters, grid/list controls, upload entry, and empty state.
+- [x] 2.2: O1 Upload & analysis overlay — file action, named stages, and failed/skipped simulation controls.
+- [x] 2.3: O2 Processing drawer — bell trigger, live jobs, statuses, and retry action.
+- [x] 2.4: A3 Book hub (`/book/[id]`) — cover fallback, mode, chapter list, status chips, actions, progress, delete confirmation.
+- [x] 2.5: System states — existing `SystemState` variants plus global, route-level not-found and error surfaces.
+- [x] Gate 2: `pnpm verify` passed; `pnpm e2e` passed 54/54 across public and app routes at three widths and both themes.
 
 ---
 
 ## Layer 3 — Reader
 
-- [ ] 3.1: A4 Reader (`/book/[id]/read`)
-- [ ] 3.2: O3 Reader settings (Aa panel)
-- [ ] 3.3: Focus mode
-- [ ] 3.4: Selection menu (Highlight, Note, Meaning, Ask, Copy)
-- [ ] 3.5: O4 Meaning overlay
-- [ ] 3.6: Bookmarks
-- [ ] 3.7: O5 Read-aloud player (Web Speech API)
-- [ ] 3.8: End-of-chapter card
-- [ ] Gate 3: 8,000-word chapter virtualized; offset positions restore; highlights survive reflow; read-aloud highlights; all 5 reader surfaces pass
+- [x] 3.1: A4 Reader (`/book/[id]/read`) — route, mock chapter loading, virtualized paragraph body, and persisted reader position store.
+- [x] 3.2: O3 Reader settings (Aa panel) — font, size, width, and five surface controls.
+- [x] 3.3: Focus mode — store action exists; toolbar toggle remains a known integration gap.
+- [ ] 3.4: Selection menu (Highlight, Note, Meaning, Ask, Copy) — partial text-selection Meaning/close menu only.
+- [ ] 3.5: O4 Meaning overlay — partial mock context panel.
+- [ ] 3.6: Bookmarks — toolbar control is present but not persisted.
+- [ ] 3.7: O5 Read-aloud player — mock docked play/pause state; Web Speech sentence highlighting remains to implement.
+- [ ] 3.8: End-of-chapter card — not yet implemented.
+- [ ] Gate 3: `pnpm e2e` route smoke passes 60/60; full 8,000-word reflow, exact-offset, speech, and five-surface gates remain known gaps.
 
 ---
 

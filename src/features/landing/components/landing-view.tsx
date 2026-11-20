@@ -74,10 +74,9 @@ export function LandingView() {
           </h1>
 
           <div className="mb-8 flex justify-center">
-            <PurposeLine
-              purpose="Upload a book, read it, and see who is in it or what it teaches."
-              className="text-base sm:text-lg"
-            />
+            <PurposeLine className="text-base sm:text-lg">
+              Upload a book, read it, and see who is in it or what it teaches.
+            </PurposeLine>
           </div>
 
           <div className="mb-12 flex flex-wrap items-center justify-center gap-4">

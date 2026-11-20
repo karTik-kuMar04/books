@@ -85,7 +85,7 @@ export function PublicShell({ children, className }: PublicShellProps) {
             <Icon name={resolvedTheme === 'dark' ? 'moon' : 'sun'} size={20} />
           </button>
 
-          <Link href="/demo">
+          <Link href="/demo" aria-label="Try a sample book">
             <Button variant="outline" size="sm" className="hidden sm:inline-flex">
               Try a sample book
             </Button>

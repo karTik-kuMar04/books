@@ -97,7 +97,7 @@ export function TopBar({ onOpenCommandPalette, className }: TopBarProps) {
         <Link
           href="/settings"
           className="focus-visible:ring-primary ms-1 flex items-center rounded-full focus-visible:ring-2 focus-visible:outline-none"
-          aria-label="User settings and account"
+          aria-label="JR, user settings and account"
         >
           <Avatar className="h-8 w-8">
             <AvatarFallback>JR</AvatarFallback>

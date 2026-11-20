@@ -54,7 +54,7 @@ export function WelcomeView() {
         </div>
         <div className="space-y-2">
           <SegmentedControl
-            size="md"
+            size="default"
             value={mode}
             onChange={(v) => setMode(v as Mode)}
             options={[

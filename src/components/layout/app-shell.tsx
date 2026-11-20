@@ -7,6 +7,7 @@ import { IconRail, Sidebar } from './sidebar';
 import { ToastContainer } from '@/components/ui/toast';
 import { SampleDataRibbon } from '@/components/patterns/sample-data-ribbon';
 import { cn } from '@/lib/cn';
+import { ProcessingDrawer } from '@/features/processing';
 
 export interface AppShellProps {
   children: React.ReactNode;
@@ -43,6 +44,7 @@ export function AppShell({ children, className }: AppShellProps) {
 
       {/* Global toasts */}
       <ToastContainer />
+      <ProcessingDrawer />
     </div>
   );
 }

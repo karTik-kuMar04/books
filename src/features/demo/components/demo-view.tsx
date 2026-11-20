@@ -11,7 +11,11 @@ import { EvidenceLink } from '@/components/patterns/evidence-link';
 import { SegmentedControl } from '@/components/ui/segmented-control';
 import { Icon } from '@/components/icons/icons';
 import { HeroPreview } from '@/features/landing';
-import { SAMPLE_BOOKS, SAMPLE_CHAPTERS } from '@/mocks/sample-data';
+import {
+  ALL_SAMPLE_BOOKS,
+  SAMPLE_NOVEL_CHAPTERS,
+  SAMPLE_STUDY_CHAPTERS,
+} from '@/mocks/sample-data';
 import { storage } from '@/lib/storage';
 
 export function DemoView() {
@@ -23,9 +27,9 @@ export function DemoView() {
     return !storage.get<boolean>('folio-demo-banner-dismissed', false);
   });
 
-  const currentBook = SAMPLE_BOOKS[selectedBookIndex] ?? SAMPLE_BOOKS[0]!;
-  const currentChapter =
-    SAMPLE_CHAPTERS.find((c) => c.bookId === currentBook.id) ?? SAMPLE_CHAPTERS[0]!;
+  const currentBook = ALL_SAMPLE_BOOKS[selectedBookIndex] ?? ALL_SAMPLE_BOOKS[0]!;
+  const chapters = currentBook.mode === 'story' ? SAMPLE_NOVEL_CHAPTERS : SAMPLE_STUDY_CHAPTERS;
+  const currentChapter = chapters[0]!;
 
   const isStory = currentBook.mode === 'story';
 
@@ -97,16 +101,15 @@ export function DemoView() {
           <h1 className="font-display text-text text-2xl font-bold md:text-3xl">
             Demo Book Experience
           </h1>
-          <PurposeLine
-            purpose="Try it on a public-domain book. No account needed."
-            className="mt-1"
-          />
+          <PurposeLine className="mt-1">
+            Try it on a public-domain book. No account needed.
+          </PurposeLine>
         </div>
 
         {/* Book Selector */}
         <div className="flex items-center gap-2">
           <SegmentedControl
-            size="md"
+            size="default"
             value={selectedBookIndex === 0 ? 'story' : 'study'}
             onChange={(val) => {
               setSelectedBookIndex(val === 'story' ? 0 : 1);
@@ -197,7 +200,7 @@ export function DemoView() {
                     ? 'border-amber bg-amber-soft text-amber-ink'
                     : 'border-border bg-page text-muted hover:text-text'
                 }`}
-                aria-label={isBookmarked ? 'Remove bookmark' : 'Add bookmark'}
+                title={isBookmarked ? 'Remove bookmark' : 'Bookmark chapter'}
               >
                 <Icon
                   name={isBookmarked ? 'bookmark-filled' : 'bookmark'}
@@ -210,15 +213,12 @@ export function DemoView() {
 
             {/* Reading Column */}
             <article className="font-display text-text mx-auto max-w-2xl space-y-4 text-base leading-relaxed sm:text-lg">
-              {currentChapter.content ? (
-                currentChapter.content
-                  .split('\n\n')
-                  .slice(0, 5)
-                  .map((paragraph, idx) => (
-                    <p key={idx} className="indent-4 leading-relaxed">
-                      {paragraph}
-                    </p>
-                  ))
+              {currentChapter.paragraphs ? (
+                currentChapter.paragraphs.slice(0, 5).map((paragraph) => (
+                  <p key={paragraph.offset} className="indent-4 leading-relaxed">
+                    {paragraph.text}
+                  </p>
+                ))
               ) : (
                 <p>No preview text available for this chapter.</p>
               )}
@@ -249,7 +249,7 @@ export function DemoView() {
                   Ground questions in the text. Cites chapter and offset.
                 </p>
               </div>
-              <Badge variant={askedQuestions.length >= 3 ? 'error' : 'secondary'}>
+              <Badge variant={askedQuestions.length >= 3 ? 'error' : 'default'}>
                 {askedQuestions.length} / 3 demo questions used
               </Badge>
             </div>
@@ -309,10 +309,18 @@ export function DemoView() {
                           <span className="text-text text-xs font-semibold">{item.q}</span>
                         </div>
                         <EvidenceLink
-                          passage={item.evidence}
-                          chapterId="ch-1"
-                          characterOffset={item.offset}
-                        />
+                          evidence={{
+                            id: `demo-${item.offset}`,
+                            bookId: currentBook.id,
+                            chapterId: currentChapter.id,
+                            chapterTitle: currentChapter.title,
+                            startOffset: item.offset,
+                            endOffset: item.offset + item.a.length,
+                            passage: item.a,
+                          }}
+                        >
+                          {item.evidence}
+                        </EvidenceLink>
                       </div>
                       <p className="text-text text-sm leading-relaxed">{item.a}</p>
                     </Card>
