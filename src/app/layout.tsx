@@ -5,6 +5,7 @@ import { siteConfig } from '@/config/site';
 import { ThemeProvider } from '@/lib/theme/theme-provider';
 import { QueryProvider } from '@/lib/query-provider';
 import { cn } from '@/lib/cn';
+import { PwaRegister } from '@/components/pwa-register';
 
 export const metadata: Metadata = {
   title: {
@@ -12,6 +13,7 @@ export const metadata: Metadata = {
     template: `%s | ${siteConfig.name}`,
   },
   description: siteConfig.description,
+  manifest: '/manifest.webmanifest',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -26,7 +28,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       </head>
       <body className="bg-page text-text min-h-screen antialiased">
         <QueryProvider>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            {children}
+            <PwaRegister />
+          </ThemeProvider>
         </QueryProvider>
       </body>
     </html>

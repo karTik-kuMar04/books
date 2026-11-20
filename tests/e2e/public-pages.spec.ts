@@ -11,6 +11,17 @@ const routes = [
   '/library',
   '/book/book-pride-and-prejudice',
   '/book/book-pride-and-prejudice/read',
+  '/book/book-pride-and-prejudice/characters',
+  '/book/book-cognitive-science/concepts',
+  '/book/book-cognitive-science/ask',
+  '/book/book-cognitive-science/cards',
+  '/marks',
+  '/vocabulary',
+  '/search',
+  '/discover',
+  '/settings/profile',
+  '/settings/ai',
+  '/admin',
 ];
 
 test.describe('Public pages and Welcome', () => {

@@ -1,9 +1,6 @@
+import { MarksView } from '@/features/marks';
+
 export default async function Page({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  return (
-    <main className="p-8">
-      <h1 className="font-display text-2xl font-bold capitalize">marks</h1>
-      <p className="text-muted text-sm">Book ID: {id}</p>
-    </main>
-  );
+  return <MarksView id={id} />;
 }

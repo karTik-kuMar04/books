@@ -17,10 +17,12 @@ import {
 } from '@/components/ui/dialog';
 import { Icon } from '@/components/icons/icons';
 import { useBook } from '../api/use-book';
+import { saveOfflineBook } from '@/lib/offline-store';
 
 export function BookHubView({ id }: { id: string }) {
   const { data, loading, error } = useBook(id);
   const [deleted, setDeleted] = React.useState(false);
+  const [downloaded, setDownloaded] = React.useState(false);
 
   if (loading)
     return (
@@ -130,6 +132,15 @@ export function BookHubView({ id }: { id: string }) {
                   Ask this book
                 </Button>
               </Link>
+              <Button
+                variant="outline"
+                className="w-full"
+                onClick={() => {
+                  void saveOfflineBook(book.id, data).then(() => setDownloaded(true));
+                }}
+              >
+                {downloaded ? 'Downloaded for offline' : 'Download for offline'}
+              </Button>
             </div>
           </Card>
           <Card className="p-5">

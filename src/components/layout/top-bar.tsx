@@ -9,6 +9,12 @@ import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { Kbd } from '@/components/ui/kbd';
 import { siteConfig } from '@/config/site';
 import { cn } from '@/lib/cn';
+import dynamic from 'next/dynamic';
+
+const CommandPalette = dynamic(
+  () => import('@/features/search').then((module) => module.CommandPalette),
+  { ssr: false },
+);
 
 export interface TopBarProps {
   onOpenCommandPalette?: () => void;
@@ -18,6 +24,18 @@ export interface TopBarProps {
 export function TopBar({ onOpenCommandPalette, className }: TopBarProps) {
   const { theme, setTheme, resolvedTheme } = useTheme();
   const { openDrawer } = useProcessingStore();
+  const [paletteOpen, setPaletteOpen] = React.useState(false);
+
+  React.useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === 'k') {
+        event.preventDefault();
+        setPaletteOpen(true);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
   const toggleTheme = () => {
     if (theme === 'light') setTheme('dark');
@@ -54,7 +72,10 @@ export function TopBar({ onOpenCommandPalette, className }: TopBarProps) {
       <div className="mx-4 flex max-w-md flex-1">
         <button
           type="button"
-          onClick={onOpenCommandPalette}
+          onClick={() => {
+            setPaletteOpen(true);
+            onOpenCommandPalette?.();
+          }}
           className="rounded-control border-border bg-page text-muted hover:border-primary/50 focus-visible:ring-primary flex h-9 w-full cursor-pointer items-center justify-between border px-3 text-xs transition-colors focus-visible:ring-2 focus-visible:outline-none"
         >
           <span className="flex items-center gap-2">
@@ -104,6 +125,7 @@ export function TopBar({ onOpenCommandPalette, className }: TopBarProps) {
           </Avatar>
         </Link>
       </div>
+      <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
     </header>
   );
 }

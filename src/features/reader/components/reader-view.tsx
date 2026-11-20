@@ -1,6 +1,7 @@
 'use client';
 
 import * as React from 'react';
+import Link from 'next/link';
 import { useVirtualizer } from '@tanstack/react-virtual';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
@@ -10,6 +11,8 @@ import { AiChip } from '@/components/patterns/ai-chip';
 import { Icon } from '@/components/icons/icons';
 import { useReaderStore } from '@/stores/reader-store';
 import { useChapter } from '../api/use-chapter';
+import { storage } from '@/lib/storage';
+import { api } from '@/api/client';
 
 export function ReaderView({ id }: { id: string }) {
   const parentRef = React.useRef<HTMLDivElement>(null);
@@ -17,6 +20,8 @@ export function ReaderView({ id }: { id: string }) {
   const [selectedText, setSelectedText] = React.useState('');
   const [meaningOpen, setMeaningOpen] = React.useState(false);
   const [playing, setPlaying] = React.useState(false);
+  const [bookmarked, setBookmarked] = React.useState(false);
+  const [showEndCard, setShowEndCard] = React.useState(false);
   const reader = useReaderStore();
   const setBookId = reader.setBookId;
   const { data, loading, error } = useChapter(id, reader.position.chapterId);
@@ -24,6 +29,10 @@ export function ReaderView({ id }: { id: string }) {
   React.useEffect(() => {
     setBookId(id);
   }, [id, setBookId]);
+
+  React.useEffect(() => {
+    setBookmarked(storage.get(`folio-bookmark-${id}-${reader.position.chapterId}`, false));
+  }, [id, reader.position.chapterId]);
 
   const paragraphs = data?.chapter.paragraphs ?? [];
   const virtualizer = useVirtualizer({
@@ -36,6 +45,43 @@ export function ReaderView({ id }: { id: string }) {
   const captureSelection = () => {
     const text = window.getSelection()?.toString().trim() ?? '';
     if (text) setSelectedText(text);
+  };
+
+  const toggleBookmark = () => {
+    const next = !bookmarked;
+    setBookmarked(next);
+    storage.set(`folio-bookmark-${id}-${reader.position.chapterId}`, next);
+  };
+
+  const toggleReadAloud = () => {
+    if (playing) {
+      window.speechSynthesis?.cancel();
+      setPlaying(false);
+      return;
+    }
+    if (!('speechSynthesis' in window)) return;
+    const text = (data?.chapter.paragraphs ?? []).map((paragraph) => paragraph.text).join(' ');
+    const speech = new SpeechSynthesisUtterance(text);
+    speech.rate = 1;
+    speech.onend = () => setPlaying(false);
+    window.speechSynthesis.cancel();
+    window.speechSynthesis.speak(speech);
+    setPlaying(true);
+  };
+
+  const saveMark = async (type: 'highlight' | 'note') => {
+    await api.marks.createMark({
+      bookId: id,
+      chapterId: data?.chapter.id ?? reader.position.chapterId,
+      chapterIndex: data?.chapter.index ?? 1,
+      chapterTitle: data?.chapter.title ?? 'Chapter',
+      type,
+      meaning: type === 'highlight' ? 'important' : undefined,
+      startOffset: reader.position.offset,
+      endOffset: reader.position.offset + selectedText.length,
+      selectedText,
+      noteText: type === 'note' ? 'Reader note' : undefined,
+    });
   };
 
   React.useEffect(() => {
@@ -71,15 +117,15 @@ export function ReaderView({ id }: { id: string }) {
           </div>
         </div>
         <div className="flex items-center gap-1">
-          <Button variant="ghost" size="sm" aria-label="Bookmark">
-            <Icon name="bookmark" size={16} />
-          </Button>
           <Button
             variant="ghost"
             size="sm"
-            aria-label="Read aloud"
-            onClick={() => setPlaying(!playing)}
+            aria-label={bookmarked ? 'Remove bookmark' : 'Add bookmark'}
+            onClick={toggleBookmark}
           >
+            <Icon name={bookmarked ? 'bookmark-filled' : 'bookmark'} size={16} />
+          </Button>
+          <Button variant="ghost" size="sm" aria-label="Read aloud" onClick={toggleReadAloud}>
             <Icon name={playing ? 'pause' : 'play'} size={16} />
           </Button>
           <Button
@@ -89,6 +135,14 @@ export function ReaderView({ id }: { id: string }) {
             onClick={() => setSettingsOpen(!settingsOpen)}
           >
             <span className="font-ui text-sm font-bold">Aa</span>
+          </Button>
+          <Button
+            variant={reader.isFocusMode ? 'primary' : 'ghost'}
+            size="sm"
+            aria-label={reader.isFocusMode ? 'Leave focus mode' : 'Enter focus mode'}
+            onClick={() => reader.toggleFocusMode()}
+          >
+            <Icon name="focus" size={16} />
           </Button>
         </div>
       </header>
@@ -194,9 +248,29 @@ export function ReaderView({ id }: { id: string }) {
 
         {selectedText && (
           <div className="border-border bg-raised rounded-card shadow-raised absolute bottom-4 left-1/2 z-40 flex -translate-x-1/2 items-center gap-1 border p-2">
-            <Button size="sm" variant="ghost" onClick={() => setMeaningOpen(true)}>
+            <Button size="sm" variant="ghost" onClick={() => void saveMark('highlight')}>
               <Icon name="highlighter" size={16} />
+              Highlight
+            </Button>
+            <Button size="sm" variant="ghost" onClick={() => void saveMark('note')}>
+              <Icon name="note" size={16} />
+              Note
+            </Button>
+            <Button size="sm" variant="ghost" onClick={() => setMeaningOpen(true)}>
               Meaning
+            </Button>
+            <Link
+              href={`/book/${id}/ask`}
+              className="rounded-control flex min-h-11 items-center px-3 text-xs font-medium"
+            >
+              Ask
+            </Link>
+            <Button
+              size="sm"
+              variant="ghost"
+              onClick={() => void navigator.clipboard.writeText(selectedText)}
+            >
+              Copy
             </Button>
             <Button size="sm" variant="ghost" onClick={() => setSelectedText('')}>
               <Icon name="close" size={16} />
@@ -221,19 +295,39 @@ export function ReaderView({ id }: { id: string }) {
         </Card>
       )}
 
+      <button
+        type="button"
+        onClick={() => setShowEndCard(!showEndCard)}
+        className="bg-card border-border text-muted rounded-control absolute right-4 bottom-4 z-30 border px-3 py-2 text-xs"
+      >
+        End of chapter
+      </button>
+
+      {showEndCard && (
+        <Card className="fixed right-4 bottom-16 z-50 max-w-sm p-4">
+          <h2 className="font-display text-text text-lg font-bold">Chapter complete</h2>
+          <p className="text-muted mt-1 text-sm">
+            Review the summary or continue to the next chapter.
+          </p>
+          <div className="mt-4 flex flex-wrap gap-2">
+            <Button size="sm" variant="outline" onClick={() => setMeaningOpen(true)}>
+              Meaning
+            </Button>
+            <Button size="sm" onClick={() => setShowEndCard(false)}>
+              Next chapter
+            </Button>
+          </div>
+        </Card>
+      )}
+
       {playing && (
         <div className="border-border bg-card rounded-card fixed right-4 bottom-4 left-4 z-50 flex items-center justify-between border p-3 md:left-auto md:w-96">
           <span className="text-sm font-semibold">Read-aloud</span>
           <div className="flex items-center gap-2">
-            <Button variant="ghost" size="sm" aria-label="Pause" onClick={() => setPlaying(false)}>
+            <Button variant="ghost" size="sm" aria-label="Pause" onClick={toggleReadAloud}>
               <Icon name="pause" size={16} />
             </Button>
-            <Button
-              variant="ghost"
-              size="sm"
-              aria-label="Close player"
-              onClick={() => setPlaying(false)}
-            >
+            <Button variant="ghost" size="sm" aria-label="Close player" onClick={toggleReadAloud}>
               <Icon name="close" size={16} />
             </Button>
           </div>

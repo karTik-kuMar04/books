@@ -1,8 +1,5 @@
+import { AdminView } from '@/features/admin';
+
 export default function AdminPage() {
-  return (
-    <main className="p-8">
-      <h1 className="font-display text-2xl font-bold capitalize">admin</h1>
-      <p className="text-muted text-sm">Folio admin page.</p>
-    </main>
-  );
+  return <AdminView />;
 }
