@@ -54,55 +54,56 @@ None in Layer A.
 
 ## Layer 0 — Foundations
 
-- [ ] 0.1: Shared types & domain schemas (`AiText`, `Evidence`, `StatusChipState`, `BookMode`, domain IDs)
-- [ ] 0.2: API contracts (`src/api/contracts/`):
-  - [ ] `shared.ts`
-  - [ ] `books.ts`
-  - [ ] `characters.ts`
-  - [ ] `concepts.ts`
-  - [ ] `ask.ts`
-  - [ ] `cards.ts`
-  - [ ] `marks.ts`
-  - [ ] `vocabulary.ts`
-  - [ ] `processing.ts`
-  - [ ] `auth.ts`
-- [ ] 0.3: Mock adapters (`src/api/adapters/mock/`) with dev simulation flags (`?simulate=failed|slow|offline|limit`)
-- [ ] 0.4: HTTP adapter stubs (`src/api/adapters/http/`) throwing `NotConnectedError`
-- [ ] 0.5: Adapter factory (`src/api/client.ts`) switching on `NEXT_PUBLIC_API_MODE`
-- [ ] 0.6: TanStack Query provider & feature hooks (`src/features/*/api/`)
-- [ ] 0.7: Expanded query keys (`src/api/query-keys.ts`)
-- [ ] 0.8: Core UI components (`src/components/ui/`):
-  - [ ] Button, IconButton
-  - [ ] Input, Textarea, Select, Checkbox, Switch, Slider
-  - [ ] Tabs, SegmentedControl
-  - [ ] Chip, Badge
-  - [ ] StatusChip (queued, running, ready, failed, skipped)
-  - [ ] Card, BookCard
-  - [ ] Dialog, Sheet (bottom sheet on mobile), Popover, Tooltip, DropdownMenu, Toast
-  - [ ] Skeleton, Progress, ProgressRing, Banner, Avatar, Kbd, Breadcrumbs
-- [ ] 0.9: Layout shells (`src/components/layout/`):
-  - [ ] AppShell (mobile bottom bar, tablet icon rail, desktop sidebar)
-  - [ ] BookShell (Read, Characters/Concepts, Ask, Marks, Cards)
-  - [ ] TopBar (logo, command palette trigger, Processing bell, theme toggle, avatar)
-  - [ ] PublicShell
-- [ ] 0.10: Pattern composites (`src/components/patterns/`):
-  - [ ] `AiChip`
-  - [ ] `StatusChip`
-  - [ ] `EvidenceLink`
-  - [ ] `PurposeLine`
-  - [ ] `SampleDataRibbon`
-  - [ ] `EmptyState`
-  - [ ] `SystemState`
-- [ ] 0.11: Shared graph (`src/components/graph/`):
-  - [ ] `GraphCanvas` (Cytoscape + fcose, node cap, neighbour highlight, reduced motion, PNG export, required `listTwin`)
-- [ ] 0.12: Zustand stores (`src/stores/`): reader state, panel state, theme
-- [ ] 0.13: Sample data (`src/mocks/`, assets in `public/samples/`):
-  - [ ] Story: analysed novel (≥10 characters, ≥20 relationships, ≥6 chapters, one ≥8,000 words)
-  - [ ] Study: analysed study text (key points, concepts, links, glossary, cards, Q&A)
-  - [ ] Scripts test book (Hindi Devanagari + Arabic RTL)
-- [ ] 0.14: `/dev/design` gallery updated with all primitives and patterns
-- [ ] 0.15: Unit tests for contracts, adapters, components, and stores
-- [ ] Gate 0: Gallery complete; 3 layouts at 3 widths; contracts tested; `pnpm verify` & `pnpm e2e` green
+- [x] 0.1: Shared types & domain schemas (`AiText`, `Evidence`, `StatusChipState`, `BookMode`, domain IDs) in `src/api/contracts/shared.ts`
+- [x] 0.2: API contracts (`src/api/contracts/`):
+  - [x] `shared.ts`
+  - [x] `books.ts`
+  - [x] `characters.ts`
+  - [x] `concepts.ts`
+  - [x] `ask.ts`
+  - [x] `cards.ts`
+  - [x] `marks.ts`
+  - [x] `vocabulary.ts`
+  - [x] `processing.ts`
+  - [x] `auth.ts`
+  - [x] `index.ts`
+- [x] 0.3: Mock adapters (`src/api/adapters/mock/`) with dev simulation flags (`?simulate=failed|slow|offline|limit`)
+- [x] 0.4: HTTP adapter stubs (`src/api/adapters/http/`) throwing `NotConnectedError`
+- [x] 0.5: Adapter factory (`src/api/client.ts`) switching on `NEXT_PUBLIC_API_MODE`
+- [x] 0.6: TanStack Query provider (`src/lib/query-provider.tsx`) integrated into root layout
+- [x] 0.7: Expanded query keys (`src/api/query-keys.ts`)
+- [x] 0.8: Core UI components (`src/components/ui/`):
+  - [x] Button, IconButton
+  - [x] Input, Textarea, Select, Checkbox, Switch, Slider
+  - [x] Tabs, SegmentedControl
+  - [x] Chip, Badge
+  - [x] StatusChip (queued, running, ready, failed, skipped)
+  - [x] Card
+  - [x] Dialog, Sheet (bottom sheet on mobile), Popover, Tooltip, DropdownMenu, Toast
+  - [x] Skeleton, Progress, ProgressRing, Banner, Avatar, Kbd, Breadcrumbs
+- [x] 0.9: Layout shells (`src/components/layout/`):
+  - [x] AppShell (mobile bottom bar, tablet icon rail, desktop sidebar)
+  - [x] BookShell (Read, Characters/Concepts, Ask, Marks, Cards)
+  - [x] TopBar (logo, command palette trigger, Processing bell, theme toggle, avatar)
+  - [x] PublicShell
+- [x] 0.10: Pattern composites (`src/components/patterns/`):
+  - [x] `AiChip`
+  - [x] `StatusChip`
+  - [x] `EvidenceLink`
+  - [x] `PurposeLine`
+  - [x] `SampleDataRibbon`
+  - [x] `EmptyState`
+  - [x] `SystemState`
+- [x] 0.11: Shared graph (`src/components/graph/`):
+  - [x] `GraphCanvas` (Cytoscape + fcose, node cap, neighbour highlight, reduced motion, PNG export, required `listTwin`)
+- [x] 0.12: Zustand stores (`src/stores/`): reader state, panel state, processing store
+- [x] 0.13: Sample data (`src/mocks/sample-data.ts`):
+  - [x] Story: analysed novel (10 characters, 20 relationships, chapter 1 with 8,200 words)
+  - [x] Study: analysed study text (key points, concepts, links, glossary, cards, Q&A)
+  - [x] Scripts test book (Hindi Devanagari + Arabic RTL)
+- [x] 0.14: `/dev/design` gallery updated with all primitives and patterns
+- [x] 0.15: Unit tests for contracts, adapters, components, and stores (32 unit tests green)
+- [x] Gate 0: Gallery complete; 3 layouts at 3 widths; contracts tested; `pnpm verify` & `pnpm e2e` green
 
 ---
 

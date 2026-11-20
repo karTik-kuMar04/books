@@ -3,6 +3,24 @@
 import React, { useEffect, useState } from 'react';
 import { useTheme } from '@/lib/theme/theme-provider';
 import { Icon, ICON_NAMES, type IconName } from '@/components/icons/icons';
+import { Button } from '@/components/ui/button';
+import { IconButton } from '@/components/ui/icon-button';
+import { Input } from '@/components/ui/input';
+import { Badge } from '@/components/ui/badge';
+import { SegmentedControl } from '@/components/ui/segmented-control';
+import { Progress, ProgressRing } from '@/components/ui/progress';
+import { Switch } from '@/components/ui/switch';
+import { Checkbox } from '@/components/ui/checkbox';
+import { Kbd } from '@/components/ui/kbd';
+import { Banner } from '@/components/ui/banner';
+import { Breadcrumbs } from '@/components/ui/breadcrumbs';
+import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
+import { AiChip } from '@/components/patterns/ai-chip';
+import { StatusChip } from '@/components/patterns/status-chip';
+import { EvidenceLink } from '@/components/patterns/evidence-link';
+import { PurposeLine } from '@/components/patterns/purpose-line';
+import { EmptyState } from '@/components/patterns/empty-state';
+import { SystemState } from '@/components/patterns/system-state';
 
 type ReaderSurface = 'paper' | 'sepia' | 'dusk' | 'ember' | 'black';
 
@@ -488,6 +506,238 @@ status = { mode: "study", activeTokens: 24, contrastScore: 7.2 };`}
                 </span>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* Section 5: Core UI Primitives */}
+        <section aria-labelledby="ui-heading" className="space-y-6">
+          <div className="border-border border-b pb-3">
+            <h2 id="ui-heading" className="font-display text-text text-2xl font-bold">
+              5. Core UI Primitives
+            </h2>
+            <p className="text-muted text-sm">
+              Accessible buttons, inputs, segmented controls, toggles, badges, and feedback
+              components.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {/* Buttons & Icon Buttons */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Buttons & Icon Controls</CardTitle>
+                <CardDescription>
+                  All 44px min touch target with 2px primary focus rings
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex flex-wrap gap-2">
+                  <Button variant="primary">Primary</Button>
+                  <Button variant="secondary">Secondary</Button>
+                  <Button variant="outline">Outline</Button>
+                  <Button variant="ghost">Ghost</Button>
+                </div>
+                <div className="border-border flex items-center gap-2 border-t pt-2">
+                  <IconButton icon="book-open" label="Open book" />
+                  <IconButton icon="bookmark" label="Bookmark" />
+                  <IconButton icon="search" label="Search" />
+                  <IconButton icon="settings" label="Settings" />
+                  <IconButton icon="sparkle" label="AI Insight" />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Form Controls */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Inputs & Selection</CardTitle>
+                <CardDescription>Semantic token styled form primitives</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <Input placeholder="Enter book title or author..." aria-label="Sample input" />
+                <div className="flex items-center justify-between">
+                  <span className="text-text text-sm">Match app theme</span>
+                  <Switch defaultChecked aria-label="Match theme toggle" />
+                </div>
+                <div className="flex items-center gap-2">
+                  <Checkbox id="demo-check" defaultChecked />
+                  <label htmlFor="demo-check" className="text-text cursor-pointer text-sm">
+                    Enable high-contrast graph nodes
+                  </label>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Segmented Control & Badges */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Selection & Badges</CardTitle>
+                <CardDescription>Mode switches and semantic chips</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <SegmentedControl
+                  options={[
+                    { value: 'story', label: 'Story Mode' },
+                    { value: 'study', label: 'Study Mode' },
+                  ]}
+                  value="story"
+                  onChange={() => {}}
+                />
+                <div className="flex flex-wrap gap-2">
+                  <Badge variant="primary">Study: Concepts</Badge>
+                  <Badge variant="rose">Story: Characters</Badge>
+                  <Badge variant="amber">User Note</Badge>
+                  <Badge variant="violet">AI Synthesis</Badge>
+                  <Badge variant="success">Extracted</Badge>
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Progress & Indicators */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Progress & Navigation</CardTitle>
+                <CardDescription>Reading percentage, rings, and breadcrumbs</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-1">
+                  <div className="text-muted flex justify-between text-xs">
+                    <span>Reading Progress</span>
+                    <span>68%</span>
+                  </div>
+                  <Progress value={68} max={100} />
+                </div>
+                <div className="flex items-center gap-3">
+                  <ProgressRing value={75} size={28} />
+                  <span className="text-text text-xs">Stage progress: 75% complete</span>
+                </div>
+                <Breadcrumbs
+                  items={[
+                    { label: 'Library', href: '/library' },
+                    { label: 'Pride and Prejudice', href: '/book/1' },
+                    { label: 'Chapter 2' },
+                  ]}
+                />
+              </CardContent>
+            </Card>
+
+            {/* Feedback Banners & Shortcuts */}
+            <Card className="md:col-span-2">
+              <CardHeader>
+                <CardTitle>Announcements & Keybindings</CardTitle>
+                <CardDescription>Alerts, accessible banners, and keyboard cues</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <Banner variant="info" icon="info">
+                  Processing chapter summaries in background. You can continue reading.
+                </Banner>
+                <div className="text-muted flex items-center gap-4 pt-2 text-xs">
+                  <span>Quick shortcuts:</span>
+                  <span className="flex items-center gap-1">
+                    <Kbd>⌘</Kbd>
+                    <Kbd>K</Kbd> Command palette
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Kbd>B</Kbd> Bookmark
+                  </span>
+                  <span className="flex items-center gap-1">
+                    <Kbd>F</Kbd> Focus mode
+                  </span>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+        </section>
+
+        {/* Section 6: Pattern Composites & System States */}
+        <section aria-labelledby="patterns-heading" className="space-y-6">
+          <div className="border-border border-b pb-3">
+            <h2 id="patterns-heading" className="font-display text-text text-2xl font-bold">
+              6. Pattern Composites & System States
+            </h2>
+            <PurposeLine>
+              Universal patterns: AiChip, 5-state StatusChip, EvidenceLink, EmptyState, and
+              SystemState.
+            </PurposeLine>
+          </div>
+
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {/* AI Chips & Status Chips */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Universal Processing Chips</CardTitle>
+                <CardDescription>The 5 required states and violet AI tags</CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <div className="flex flex-wrap items-center gap-2">
+                  <AiChip />
+                  <AiChip label="AI Summary" />
+                  <EvidenceLink
+                    evidence={{
+                      id: 'demo-ev',
+                      bookId: 'b1',
+                      chapterId: 'ch1',
+                      chapterTitle: 'Chapter 1',
+                      startOffset: 0,
+                      endOffset: 50,
+                      passage: 'Sample passage text.',
+                    }}
+                  />
+                </div>
+                <div className="border-border flex flex-wrap gap-2 border-t pt-2">
+                  <StatusChip state="queued" />
+                  <StatusChip
+                    state="running"
+                    stageName="Extracting characters"
+                    progressPercent={48}
+                  />
+                  <StatusChip state="ready" />
+                  <StatusChip state="failed" reason="DRM protected" />
+                  <StatusChip state="skipped" reason="AI features off" />
+                </div>
+              </CardContent>
+            </Card>
+
+            {/* Empty State */}
+            <Card>
+              <CardHeader>
+                <CardTitle>Empty State Pattern</CardTitle>
+                <CardDescription>
+                  Always states what it holds and the exact action that fills it
+                </CardDescription>
+              </CardHeader>
+              <CardContent>
+                <EmptyState
+                  icon="marks"
+                  title="No marks saved yet"
+                  description="Select any passage while reading to add a highlight, question, or private note."
+                  actionLabel="Go to Library"
+                  onAction={() => {}}
+                />
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* System State Variant Previews */}
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+            <SystemState
+              type="offline"
+              title="You are offline"
+              description="Downloaded books remain fully readable in your local workspace."
+              className="min-h-0 py-2"
+            />
+            <SystemState
+              type="limit-reached"
+              title="Daily questions limit"
+              description="Free quota reached. New AI questions reset at midnight."
+              className="min-h-0 py-2"
+            />
+            <SystemState
+              type="unsupported-file"
+              title="Scanned PDF detected"
+              description="Only digital PDFs with selectable text can be analyzed."
+              className="min-h-0 py-2"
+            />
           </div>
         </section>
       </main>

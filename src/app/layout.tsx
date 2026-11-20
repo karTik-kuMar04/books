@@ -3,6 +3,7 @@ import { fraunces, inter } from '@/styles/fonts/ui';
 import '@/styles/globals.css';
 import { siteConfig } from '@/config/site';
 import { ThemeProvider } from '@/lib/theme/theme-provider';
+import { QueryProvider } from '@/lib/query-provider';
 import { cn } from '@/lib/cn';
 
 export const metadata: Metadata = {
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className="bg-page text-text min-h-screen antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <QueryProvider>
+          <ThemeProvider>{children}</ThemeProvider>
+        </QueryProvider>
       </body>
     </html>
   );

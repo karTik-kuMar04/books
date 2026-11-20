@@ -29,13 +29,13 @@ Folio is a private book reader that explains the book. Users upload a PDF, EPUB,
 - Structure:
   - `src/app/`: Thin route entry points only (<40 lines, no business logic).
   - `src/features/<name>/`: Self-contained features with `components/`, `hooks/`, `api/`, `model/`, and public `index.ts`.
-  - `src/components/`: `ui/` primitives, `layout/` shells, `patterns/` composites, `icons/icons.tsx`.
+  - `src/components/`: `ui/` primitives, `layout/` shells, `patterns/` composites, `graph/` canvas & list twin, `icons/icons.tsx`.
   - `src/api/`: `contracts/`, `adapters/` (`mock/`, `http/`), `client.ts`, `flags.ts`, `query-keys.ts`.
   - `src/lib/`: Shared utilities (`cn.ts`, `theme/`, `storage.ts`, `env.ts`).
   - `src/config/`: `site.ts`, `nav.ts`, `routes.ts`, `limits.ts`, `modes.ts`.
   - `src/styles/`: `globals.css`, `tokens.css`, `reader.css`, `fonts/`.
 - Dependency Direction: `app` -> `features` -> `components`, `lib`, `api`, `stores`, `hooks`, `config`.
-- `components/ui` imports only `lib` and `components/icons`. `lib` imports nothing from higher layers.
+- `components/ui` imports only `lib` and `components/icons`. `components/graph` imports only `ui`, `lib`, and `components/icons`. `lib` imports nothing from higher layers.
 - Cross-feature access is strictly banned: import exclusively from a feature's public `index.ts`.
 - See [architecture.md](file:///Users/kartikkumar/projects/Personal/book/docs/ai/architecture.md) for details.
 
