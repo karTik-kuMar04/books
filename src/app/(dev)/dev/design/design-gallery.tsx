@@ -324,7 +324,9 @@ export function DesignGallery() {
                 <span className="text-muted font-mono text-xs">JetBrains Mono (--nf-mono)</span>
               </div>
               <pre
-                className="rounded-control bg-page text-text border-border mt-3 overflow-x-auto border p-3 text-xs"
+                tabIndex={0}
+                aria-label="Code sample"
+                className="rounded-control bg-page text-text border-border focus:ring-primary mt-3 overflow-x-auto border p-3 text-xs focus:ring-2 focus:outline-none"
                 style={{ fontFamily: 'var(--nf-mono, monospace)' }}
               >
                 {`position = { chapterId: "ch-04", startOffset: 1420, endOffset: 1580 };
