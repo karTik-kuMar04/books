@@ -1,8 +1,10 @@
+import { PublicShell } from '@/components/layout/public-shell';
+import { DemoView } from '@/features/demo';
+
 export default function DemoPage() {
   return (
-    <main className="p-8">
-      <h1 className="font-display text-2xl font-bold capitalize">demo</h1>
-      <p className="text-muted text-sm">Folio demo page.</p>
-    </main>
+    <PublicShell>
+      <DemoView />
+    </PublicShell>
   );
 }
